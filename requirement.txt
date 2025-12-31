@@ -1,0 +1,17 @@
+# Core
+numpy>=1.23
+opencv-python>=4.8
+
+# Object Detection (YOLO)
+ultralytics>=8.1.0
+
+# Tracking
+scipy>=1.10
+filterpy>=1.4
+
+# Logging & Config
+PyYAML>=6.0
+pandas>=2.0
+
+# Visualization (optional but useful)
+matplotlib>=3.7
