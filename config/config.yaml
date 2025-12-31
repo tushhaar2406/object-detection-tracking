@@ -1,0 +1,85 @@
+# ================================
+# Video Analytics Configuration
+# ================================
+
+app:
+  name: "object-detection-tracking"
+  environment: "development"   # development | staging | production
+
+# ----------------
+# Video Input
+# ----------------
+video:
+  source: "data/input.mp4"     # Path or camera index (0, 1, ...)
+  type: "file"                 # file | camera
+  resize:
+    enabled: true
+    width: 1280
+    height: 720
+  fps_limit: 30                # 0 = unlimited
+
+# ----------------
+# Detection Config
+# ----------------
+detection:
+  framework: "yolo"
+  model:
+    name: "yolov8n.pt"          # yolov8n.pt | yolov8s.pt | yolov8m.pt
+    device: "auto"              # auto | cpu | cuda
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  classes:                      # COCO class IDs
+    enabled: true
+    ids: [0, 2, 3, 5, 7]        # person, car, motorcycle, bus, truck
+
+# ----------------
+# Tracking Config
+# ----------------
+tracking:
+  algorithm: "bytetrack"        # bytetrack | deepsort
+  max_age: 30                   # frames to keep "lost" tracks
+  min_hits: 3                   # frames before confirming track
+  iou_threshold: 0.3
+  use_confidence_score: true
+
+# ----------------
+# Output Settings
+# ----------------
+output:
+  save_video: true
+  video:
+    codec: "mp4v"
+    output_path: "outputs/videos/output.mp4"
+    draw:
+      boxes: true
+      labels: true
+      track_id: true
+      confidence: true
+  save_logs: true
+  logs:
+    format: ["csv", "json"]
+    output_dir: "outputs/logs"
+
+# ----------------
+# Logging
+# ----------------
+logging:
+  level: "INFO"                 # DEBUG | INFO | WARNING | ERROR
+  console: true
+  file: true
+  file_path: "outputs/logs/app.log"
+
+# ----------------
+# Performance & Monitoring
+# ----------------
+performance:
+  enable_fps_counter: true
+  enable_latency_tracking: true
+  log_interval_sec: 5
+
+# ----------------
+# Debug Options
+# ----------------
+debug:
+  show_window: true
+  exit_key: "q"
